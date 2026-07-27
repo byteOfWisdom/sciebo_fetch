@@ -16,6 +16,10 @@ class content:
         with self.zip.open(file) as handle:
             return handle.read()
 
+    def np_loadable(self, file: str):
+        data = str(self.read_file(file)).split("\n")
+        return (line for line in data)
+
     def open(self, file: str):
         return self.zip.open(file)
 
