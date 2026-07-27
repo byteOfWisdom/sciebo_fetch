@@ -17,7 +17,8 @@ class content:
             return handle.read()
 
     def np_loadable(self, file: str):
-        data = str(self.read_file(file)).split("\n")
+        raw_data = self.read_file(file)
+        data = raw_data.decode("utf-8").split("\n")
         return (line for line in data)
 
     def open(self, file: str):
