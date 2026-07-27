@@ -1,10 +1,11 @@
 import zipfile
 from urllib import request
 import tempfile
+import glob
 
 
 class content:
-    def __init__(self, zip: zipfile.Zipfile):
+    def __init__(self, zip: zipfile.Zipfile, cache_as=False):
         self.zip = zip
 
     def ls(self) -> [str]:
@@ -27,14 +28,26 @@ class content:
 
 def get_sciebo_directory(url: str, cache_locally=False) -> zipfile.ZipFile:
     response = request.urlopen(url)
-    storage = tempfile.TemporaryFile()
-    storage.write(response.read())
+    storage = None
+    if not cache_locally:
+        storage = tempfile.TemporaryFile()
+        storage.write(response.read())
+    else:
+        storage = open(cache_locally, "wb")
+        storage.write(response.read())
+        storage.close()
+        storage = open(cache_locally, "r")
     storage.seek(0)
     zf = zipfile.ZipFile(storage)
-    # print(zf.namelist())
     return zf
 
 
-def fetch(url: str):
+def fetch(url: str, cache_as=False):
+    if cache_as:
+        temp_path = tempfile.gettempdir()
+        if len(glob.glob(temp_path + cache_as)):
+            return content(zipfile.ZipFile(temp_path + cache_as, "r"))
+        else:
+            return get_sciebo_directory(url, temp_path + cache_as)
     return content(get_sciebo_directory(url))
     
