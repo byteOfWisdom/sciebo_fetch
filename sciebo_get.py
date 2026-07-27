@@ -11,3 +11,6 @@ def get_sciebo_directory(url: str, cache_locally=False) -> zipfile.ZipFile:
     zf = zipfile.ZipFile(storage)
     print(zf.namelist())
     return None
+
+
+fetch = get_sciebo_directory
