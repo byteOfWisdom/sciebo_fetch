@@ -50,6 +50,6 @@ def fetch(url: str, cache_as=False, force_load=False):
             return content(zipfile.ZipFile(temp_path + cache_as, "r"))
         else:
             print("caching but not found")
-            return get_sciebo_directory(url, temp_path + cache_as)
+            return content(get_sciebo_directory(url, temp_path + cache_as))
     return content(get_sciebo_directory(url))
     
