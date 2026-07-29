@@ -42,10 +42,10 @@ def get_sciebo_directory(url: str, cache_locally=False) -> zipfile.ZipFile:
     return zf
 
 
-def fetch(url: str, cache_as=False):
+def fetch(url: str, cache_as=False, force_load=False):
     if cache_as:
         temp_path = tempfile.gettempdir()
-        if len(glob.glob(temp_path + cache_as)) > 0:
+        if len(glob.glob(temp_path + cache_as)) > 0 and not force_load:
             print("caching and found")
             return content(zipfile.ZipFile(temp_path + cache_as, "r"))
         else:
