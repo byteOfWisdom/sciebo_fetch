@@ -36,7 +36,7 @@ def get_sciebo_directory(url: str, cache_locally=False) -> zipfile.ZipFile:
         cache_file = open(cache_locally, "wb")
         cache_file.write(response.read())
         cache_file.close()
-        storage = open(cache_locally, "r")
+        storage = open(cache_locally, "rb")
     storage.seek(0)
     zf = zipfile.ZipFile(storage)
     return zf
