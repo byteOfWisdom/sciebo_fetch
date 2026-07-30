@@ -5,7 +5,7 @@ import glob
 
 
 class content:
-    def __init__(self, zip: zipfile.Zipfile, cache_as=False):
+    def __init__(self, zip: zipfile.ZipFile, cache_as=False):
         self.zip = zip
 
     def ls(self) -> [str]:
