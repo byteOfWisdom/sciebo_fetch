@@ -53,3 +53,6 @@ def fetch(url: str, cache_as=False, force_load=False):
             return content(get_sciebo_directory(url, temp_path + cache_as))
     return content(get_sciebo_directory(url))
     
+
+def open(file: str) -> content:
+    return content(zipfile.ZipFile(file, "r"))
