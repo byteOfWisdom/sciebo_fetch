@@ -49,7 +49,7 @@ def fetch(url: str, cache_as=False, force_load=False):
         md5_hash = hashlib.md5()
         md5_hash.update(url.encode())
         url_hash = md5_hash.hexdigest()
-        temp_path = tempfile.gettempdir() + "sciebo_cache_" + url_hash
+        temp_path = tempfile.gettempdir() + "/sciebo_cache_" + url_hash
         if len(glob.glob(temp_path)) > 0 and not force_load:
             print("caching and found")
             return content(zipfile.ZipFile(temp_path, "r"))
