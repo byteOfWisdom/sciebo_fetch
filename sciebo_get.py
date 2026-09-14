@@ -2,6 +2,7 @@ import zipfile
 from urllib import request
 import tempfile
 import glob
+import hashlib
 
 
 class content:
@@ -44,13 +45,14 @@ def get_sciebo_directory(url: str, cache_locally=False) -> zipfile.ZipFile:
 
 def fetch(url: str, cache_as=False, force_load=False):
     if cache_as:
-        temp_path = tempfile.gettempdir()
-        if len(glob.glob(temp_path + cache_as)) > 0 and not force_load:
+        url_hash = hashlib.md5().hexdigest(url)
+        temp_path = tempfile.gettempdir() + "sciebo_cache_" + url_hash
+        if len(glob.glob(temp_path)) > 0 and not force_load:
             print("caching and found")
-            return content(zipfile.ZipFile(temp_path + cache_as, "r"))
+            return content(zipfile.ZipFile(temp_path, "r"))
         else:
             print("caching but not found")
-            return content(get_sciebo_directory(url, temp_path + cache_as))
+            return content(get_sciebo_directory(url, temp_path))
     return content(get_sciebo_directory(url))
     
 
