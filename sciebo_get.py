@@ -4,6 +4,7 @@ import tempfile
 import glob
 import hashlib
 
+file_open = open
 
 class content:
     def __init__(self, zip: zipfile.ZipFile, cache_as=False):
@@ -35,10 +36,10 @@ def get_sciebo_directory(url: str, cache_locally=False) -> zipfile.ZipFile:
         storage.write(response.read())
     else:
         print(cache_locally)
-        cache_file = open(cache_locally, "wb")
+        cache_file = file_open(cache_locally, mode="wb")
         cache_file.write(response.read())
         cache_file.close()
-        storage = open(cache_locally, "rb")
+        storage = file_open(cache_locally, "rb")
     storage.seek(0)
     zf = zipfile.ZipFile(storage)
     return zf
